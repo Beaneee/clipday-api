@@ -1,5 +1,6 @@
 package com.clipday.api.dailyrecord;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class DailyRecordController {
     // POST /api/records
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DailyRecordResponse create(@RequestBody DailyRecordCreateRequest request) {
+    public DailyRecordResponse create(@Valid @RequestBody DailyRecordCreateRequest request) {
         return service.create(request);
     }
 
@@ -36,7 +37,7 @@ public class DailyRecordController {
     @PutMapping("/{id}")
     public DailyRecordResponse update(
             @PathVariable Long id,
-            @RequestBody DailyRecordUpdateRequest request
+            @Valid @RequestBody DailyRecordUpdateRequest request
     ) {
         return service.update(id, request);
     }
