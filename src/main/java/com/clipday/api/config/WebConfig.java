@@ -2,6 +2,7 @@ package com.clipday.api.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,5 +22,14 @@ public class WebConfig implements WebMvcConfigurer {
         String location = Paths.get(uploadDir).toAbsolutePath().normalize().toUri().toString();
         registry.addResourceHandler("/images/**")
                 .addResourceLocations(location);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*") // 배포 시 변경
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
 }
