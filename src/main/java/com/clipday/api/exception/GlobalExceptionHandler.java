@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -20,6 +22,23 @@ public class GlobalExceptionHandler {
         ErrorResponse body = ErrorResponse.of(
                 HttpStatus.BAD_REQUEST.value(), "Bad Request", message);
         return ResponseEntity.badRequest().body(body);
+    }
+
+    // 400 - 잘못된 요청 (파일 검증 등)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException e) {
+        ErrorResponse body = ErrorResponse.of(
+                HttpStatus.BAD_REQUEST.value(), "Bad Request", e.getMessage());
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    // 413 - 파일 용량 초과
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxSize(MaxUploadSizeExceededException e) {
+        ErrorResponse body = ErrorResponse.of(
+                HttpStatus.PAYLOAD_TOO_LARGE.value(), "Payload Too Large",
+                "파일 크기가 너무 큽니다. (최대 10MB)");
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(body);
     }
 
     // 404 - 리소스 없음
