@@ -20,6 +20,11 @@ spring:
 
 server:
   port: ${SERVER_PORT:8080}
+  tomcat:
+    # 크기 제한을 넘긴 요청도 본문을 끝까지 읽어야 413 응답이 클라이언트에 닿는다.
+    # 기본값(2MB)이면 Tomcat이 나머지를 버리고 커넥션을 끊어서, 브라우저는
+    # 413 대신 네트워크 오류를 받는다. -1은 제한 없음.
+    max-swallow-size: -1
 
 app:
   upload:
