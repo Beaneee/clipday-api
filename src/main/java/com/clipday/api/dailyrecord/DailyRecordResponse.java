@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public record DailyRecordResponse(
         Long id,
+        String tabId,
         LocalDate date,
         String memo,
         String imageUrl,
@@ -14,6 +15,7 @@ public record DailyRecordResponse(
     public static DailyRecordResponse from(DailyRecord entity) {
         return new DailyRecordResponse(
                 entity.getId(),
+                entity.getTabId(),
                 entity.getDate(),
                 entity.getMemo(),
                 entity.getImageUrl(),

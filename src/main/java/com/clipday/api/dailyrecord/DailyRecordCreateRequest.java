@@ -7,6 +7,9 @@ import java.time.LocalDate;
 
 public record DailyRecordCreateRequest(
 
+        @Size(max = 100, message = "탭 식별자가 너무 깁니다.")
+        String tabId,
+
         @NotNull(message = "날짜는 필수입니다.")
         LocalDate date,
 
