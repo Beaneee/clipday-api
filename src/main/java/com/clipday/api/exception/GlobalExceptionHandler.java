@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleMaxSize(MaxUploadSizeExceededException e) {
         ErrorResponse body = ErrorResponse.of(
                 HttpStatus.PAYLOAD_TOO_LARGE.value(), "Payload Too Large",
-                "파일 크기가 너무 큽니다. (최대 10MB)");
+                "파일 크기가 너무 큽니다. (최대 30MB)");
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(body);
     }
 
